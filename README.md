@@ -2,12 +2,12 @@
 
 How to clone this project
 
-clone the repo git clone https://github.com/StavrosSpil/SpiliopoulosStavros-expenses.git
+  clone the repo: git clone https://github.com/StavrosSpil/SpiliopoulosStavros-expenses.git
 
-create a virtual environment virtualenv py -m venv project-name
+  create a virtual environment: virtualenv py -m venv project-name
 
-activate the virtual environment project-name\Scripts\activate.bat
+  activate the virtual environment: project-name\Scripts\activate.bat
 
-install requirements pip install -r requirements.txt
+  install requirements: pip install -r requirements.txt
 
-To install requirements, these packages are required in system sudo apt-get install 
+  To install requirements, these packages are required in system sudo apt-get install 
