@@ -2,7 +2,7 @@
 
 How to clone this project
 
-clone the repo git clone https://github.com/SpiliopoulosStavros/expenses.git
+clone the repo git clone https://github.com/StavrosSpil/SpiliopoulosStavros-expenses.git
 
 create a virtual environment virtualenv py -m venv project-name
 
