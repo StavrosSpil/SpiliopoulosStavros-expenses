@@ -1,0 +1,72 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>USERS:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_user' %}">Create User</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>User</th>
+					<th>Phone</th>
+                    <th>Address</th>
+					<th>Update</th>
+					<th>Remove</th>
+					<th>Update Profile</th>
+				</tr>
+
+                {% for profile in profiles %}
+                    <tr>
+						<td><a class="btn btn-sm btn-info" href="{% url 'user' profile.id %}">View</a></td>
+                        <td>{{profile.user.username}} {{profile.user.last_name}}</td>
+                        <td>{{profile.cellphone}}</td>
+                        <td>{{profile.address}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_user' profile.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_user' profile.id %}">Delete</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_profile' profile.id %}">Update Profile</a></td>
+                    </tr>
+                {% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>BUILDINGS:</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_building' %}">Create Building</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Address</th>
+					<th>Floors</th>
+					<th>Apartments</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for building in buildings %}
+                    <tr>
+						<td><a class="btn btn-sm btn-info" href="{% url 'building' building.id %}">View</a></td>
+                        <td>{{building.address}}</td>
+                        <td>{{building.floors}}</td>
+                        <td>{{building.apartments}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_building' building.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_building' building.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

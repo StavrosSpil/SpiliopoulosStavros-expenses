@@ -1,0 +1,56 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="card card-body">
+			<h5>Tenant of this apartment</h5>
+			<hr>
+			<p>Email: {{profile.user.email}} </p>
+			<p>Phone: {{profile.cellphone}} </p>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="card card-body">
+			<h5>View your Payments</h5>
+			<hr>
+			<a class="btn btn-sm btn-info" href="{% url 'tenant_expenses' %}">View</a>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<h5>Information about this apartment</h5>
+				<hr>
+				<tr>
+					<th>Address</th>
+					<th>Floor</th>
+					<th>Square_meters</th>
+					<th>Heating</th>
+					<th>Elevator</th>
+					<th>General_expenses</th>
+				</tr>
+
+				<tr>
+					<td>{{apartment.building}}</td>
+					<td>{{apartment.floor}}</td>
+					<td>{{apartment.square_meters}}</td>
+					<td>{{apartment.heating}}</td>
+					<td>{{apartment.elevator}}</td>
+					<td>{{apartment.general_expenses}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

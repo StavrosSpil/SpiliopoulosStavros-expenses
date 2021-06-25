@@ -1,0 +1,63 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<h5>APARTMENTS:</h5>
+		<hr>
+		<div class="card card-body">
+			<form method="get">
+				{{ myFilter.form }}
+		    <button class="btn btn-primary" type="submit">Search</button>
+
+		  </form>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_apartment' %}">Create Apartment</a>
+			<table class="table table-sm">
+				<tr>
+                    <th>Tenant</th>
+					<th>Address</th>
+					<th>Floor</th>
+                    <th>Square Meters</th>
+					<th>Owner</th>
+					<th>Heating</th>
+					<th>Elevator</th>
+					<th>General_expenses</th>
+					<th>Fi</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for apartment in apartments %}
+					<tr>
+						<td>{{apartment.tenant}} {{apartment.tenant.user.last_name}}</td>
+						<td>{{apartment.building.address}}</td>
+						<td>{{apartment.floor}}</td>
+						<td>{{apartment.square_meters}}</td>
+						<td>{{apartment.owner}}</td>
+						<td>{{apartment.heating}}</td>
+						<td>{{apartment.elevator}}</td>
+						<td>{{apartment.general_expenses}}</td>
+						<td>{{apartment.fi}}</td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'update_apartment' apartment.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_apartment' apartment.id %}">Delete</a></td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

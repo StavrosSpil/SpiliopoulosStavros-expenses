@@ -1,0 +1,59 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>User</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_user' profile.id %}">Update User</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'delete_user' profile.id %}">Delete User</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Contact Information</h5>
+			<hr>
+			<p>First name: {{profile.user.first_name}}</p>
+			<p>Last name: {{profile.user.last_name}}</p>
+			<p>Email: {{profile.user.email}}</p>
+			<p>Phone: {{profile.cellphone}}</p>
+		</div>
+	</div>
+
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Address</th>
+					<th>Floor</th>
+					<th>Square Meters</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+
+                <tr>
+					<td>{{profile.address}}</td>
+					<td>{{apartment.floor}}</td>
+					<td>{{apartment.square_meters}}</td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'update_user' profile.id %}">Update</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{% url 'delete_user' profile.id %}">Remove</a></td>
+				</tr>
+
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

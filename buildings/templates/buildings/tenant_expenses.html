@@ -1,0 +1,52 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<hr>
+		<div class="card card-body">
+			<form method="get">
+				{{ myFilter.form }}
+		    <button class="btn btn-primary" type="submit">Search</button>
+
+		  </form>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<h5>Information about the payments of this apartment</h5>
+				<hr>
+				<tr>
+                    <th>Total_heating</th>
+					<th>Total_general</th>
+					<th>Total_elevator</th>
+					<th>Year</th>
+					<th>Month</th>
+					<th>Payment_made</th>
+				</tr>
+
+				{% for payment in payments %}
+					<tr>
+						<td>{{payment.total_heating}}</td>
+						<td>{{payment.total_general}}</td>
+						<td>{{payment.total_elevator}}</td>
+						<td>{{payment.year}}</td>
+						<td>{{payment.month}}</td>
+						<td>{{payment.payment_made}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{%  extends 'buildings/base.html' %}
+{% block content %}
+
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+
+			<form enctype="multipart/form-data" method="POST" action="">
+				{% csrf_token %}
+				{{ form.non_field_errors }}
+
+				<div class="fieldWrapper">
+					{{ form.profile.errors }}
+					<label >Administrator:</label>
+					{{ form.profile }}
+				</div>
+				<div class="fieldWrapper">
+					{{ form.total.errors }}
+					<label >Total:</label>
+					{{ form.total }}
+				</div>
+				<div class="fieldWrapper">
+					{{ form.month.errors }}
+					<label >Month:</label>
+					{{ form.month }}
+				</div>
+				<div class="fieldWrapper">
+					{{ form.year.errors }}
+					<label >Year:</label>
+					{{ form.year }}
+				</div>
+				<div class="fieldWrapper">
+					{{ form.type_expenses.errors }}
+					<label >Type Expense:</label>
+					{{ form.type_expenses }}
+				</div>
+				<div class="fieldWrapper">
+					{{ form.document.errors }}
+					<label>Document:</label>
+					{{ form.document }}
+				</div>
+
+
+				<a class="btn btn-warning" href="{% url 'administrator_page' %}">Back</a>
+
+				<input class="btn btn-info" type="submit" name="Submit">
+			</form>
+
+		</div>
+
+		{{form.errors}}
+
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<h5>Payments of the building at {{building}}:</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Tenant</th>
+					<th>Apartment_Id</th>
+					<th>Total_heating</th>
+					<th>Total_elevator</th>
+					<th>Total_general</th>
+					<th>Month</th>
+                    <th>Year</th>
+                    <th>Payment_Made</th>
+                </tr>
+
+                {% for key,payment in payments.items %}
+                    <tr>
+						<td>{{payment.apartment}}</td>
+						<td>{{key}}</td>
+						<td>{{payment.total_heating}}</td>
+						<td>{{payment.total_elevator}}</td>
+						<td>{{payment.total_general}}</td>
+                        <td>{{payment.month}}</td>
+                        <td>{{payment.year}}</td>
+						<td><a class="btn btn-info  btn-sm btn-block" href="{% url 'view_payments' payment.id %}">View</a></td>
+                    </tr>
+                {% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<h5>Total of this month</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Apartment_Id</th>
+					<th>Total</th>
+				</tr>
+
+				{% for key,total in total.items %}
+					<tr>
+						<td>{{key}}</td>
+						<td>{{total}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

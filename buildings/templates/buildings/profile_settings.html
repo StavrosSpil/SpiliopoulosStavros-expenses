@@ -1,0 +1,24 @@
+{%  extends 'buildings/base.html' %}
+{% block content %}
+
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+
+			<form action="" method="POST">
+				{% csrf_token %}
+				{{form.as_p}}
+
+				<a class="btn btn-warning" href="{% url 'home' %}">Back</a>
+				
+				<input class="btn btn-info" type="submit" name="Update Information">
+			</form>
+
+		</div>
+
+	</div>
+</div>
+
+
+{% endblock %}

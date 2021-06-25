@@ -1,0 +1,73 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<h5>Total expenses for the building at {{building.address}}</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Total_Heating</th>
+					<th>Total_Elevator</th>
+					<th>Total_General</th>
+                </tr>
+				<tr>
+					<td>{{total_heating}}</td>
+					<td>{{total_elevator}}</td>
+					<td>{{total_general}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<h5>Expenses for the apartments individually</h5>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Apartment_Id</th>
+					<th>Total_Heating</th>
+				</tr>
+				{% for key,value in apartment_heating.items %}
+					<tr>
+						<td>{{key}}</td>
+						<td>{{value}}</td>
+					</tr>
+				{% endfor %}
+
+				<tr>
+					<th>Apartment_Id</th>
+					<th>Total_Elevator</th>
+				</tr>
+				{% for key,value in apartment_elevator.items %}
+					<tr>
+						<td>{{key}}</td>
+						<td>{{value}}</td>
+					</tr>
+				{% endfor %}
+
+				<tr>
+					<th>Apartment_Id</th>
+					<th>Total_General</th>
+				</tr>
+				{% for key,value in apartment_general.items %}
+					<tr>
+						<td>{{key}}</td>
+						<td>{{value}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

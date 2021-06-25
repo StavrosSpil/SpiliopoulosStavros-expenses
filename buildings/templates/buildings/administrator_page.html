@@ -1,0 +1,113 @@
+{% extends 'buildings/base.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-10">
+		<div class="card card-body">
+		<h5>Building at {{building.address}} :</h5>
+		<hr>
+			<table class="table table-sm">
+				<tr>
+					<th>Administrator</th>
+					<th>Address</th>
+					<th>Floors</th>
+					<th>Apartments</th>
+					<th>Reserve</th>
+				</tr>
+
+				<tr>
+					<td>{{building.profile}}</td>
+					<td>{{building.address}}</td>
+					<td>{{building.floors}}</td>
+					<td>{{building.apartments}}</td>
+					<td>{{building.reserve}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+
+	<div class="col-md-7">
+		<div class="card card-body">
+			<h5>Add the consumption for every apartment</h5>
+			<hr>
+			<tr>
+				<a class="btn btn-sm btn-info" href="{% url 'consumption' %}">Add Consumption</a>
+			</tr>
+		</div>
+	</div>
+</div>
+
+<br>
+
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="card card-body">
+			<h5>View the expenses or add a new one</h5>
+			<hr>
+			<table class="table table-sm">
+				<tr>
+					<td><a class="btn btn-sm btn-info" href="{% url 'expense' building.id %}">View Expenses</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'create_expense' building.id %}">Add Expense</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="card card-body">
+			<h5>Calculate the bills of every apartment or view the payments of the month</h5>
+			<hr>
+			<table class="table table-sm">
+				<tr>
+					<td><a class="btn btn-sm btn-info" href="{% url 'calculate_expenses' %}">Calculate</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'payments' %}">View Payments</a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<h5>Apartments of this building :</h5>
+		<hr>
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+                    <th>Tenant</th>
+					<th>Address</th>
+					<th>Floor</th>
+                    <th>Square Meters</th>
+					<th>Heating</th>
+					<th>Elevator</th>
+					<th>General_expenses</th>
+				</tr>
+
+				{% for apartment in apartments %}
+				<tr>
+					<td>{{apartment.tenant}}</td>
+					<td>{{apartment.building.address}}</td>
+					<td>{{apartment.floor}}</td>
+					<td>{{apartment.square_meters}}</td>
+					<td>{{apartment.heating}}</td>
+					<td>{{apartment.elevator}}</td>
+					<td>{{apartment.general_expenses}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'buildings/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<a class="btn btn-info  btn-sm btn-block" href="{% url 'create_expense' building.id %}">Create Expense</a>
+
+<br>
+
+<div class="row">
+	<div class="col">
+		<h5>Expenses of the building at {{building}}:</h5>
+		<hr>
+		<div class="card card-body">
+			<form method="get">
+				{{ myFilter.form }}
+		    <button class="btn btn-primary" type="submit">Search</button>
+
+		  </form>
+		</div>
+	</div>
+</div>
+
+<br>
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+                    <th>Total</th>
+					<th>Administrator</th>
+					<th>Date_created</th>
+					<th>Year</th>
+					<th>Month</th>
+					<th>Document</th>
+                    <th>Type of the Expenses</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for expense in expenses %}
+					<tr>
+						<td>{{expense.total}}</td>
+						<td>{{expense.profile.user}}</td>
+						<td>{{expense.date_created}}</td>
+						<td>{{expense.year}}</td>
+						<td>{{expense.month}}</td>
+						<td> <a href="/static/documents/{{expense.document}}" target="_blank">{{expense.document}}</a></td>
+						<td>{{expense.type_expenses}}</td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_expense' expense.id %}">Remove</a></td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
