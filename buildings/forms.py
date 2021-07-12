@@ -41,6 +41,16 @@ class ConsumptionForm(ModelForm):
         fields = '__all__'
 
 
+# class ConsumptionForm(ModelForm):
+# class Meta:
+# model = Consumption
+# fields = ['month', 'year', 'consumption']
+
+# def __init__(self, building, *args, **kwargs):
+# super(ConsumptionForm, self).__init__(*args, **kwargs)
+# self.fields['apartment'].queryset = Apartment.objects.filter(building=building)
+
+
 class ExpenseForm(forms.Form):
     profile = forms.CharField(max_length=100)
     document = forms.FileField()

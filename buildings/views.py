@@ -10,7 +10,7 @@ from .filters import ApartmentFilter, ExpenseFilter, PaymentFilter
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Building, Profile, Apartment, Expense, Payment
+from .models import Building, Profile, Apartment, Expense, Payment, Consumption
 
 from django.shortcuts import get_object_or_404
 
@@ -248,6 +248,7 @@ def updateProfile(request, pk):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrators', 'Tenants'])
 def tenantPage(request):
     user = request.user
     profile = user.profile
@@ -258,7 +259,8 @@ def tenantPage(request):
 
 
 @login_required(login_url='login')
-#prepei na mhn mporoun na mpainoun oi enoikoi
+# only administrators have access to this page
+@allowed_users(allowed_roles=['Administrators'])
 def administratorPage(request):
     user = request.user
     profile = user.profile
@@ -274,21 +276,24 @@ def calculateExpenses(request):
     total_heating = 0.0
     total_elevator = 0.0
     total_general = 0.0
+    total_product = 0.0
     apartment_heating = {}
     apartment_elevator = {}
     apartment_general = {}
+    consumption = {}
+    product = {}
+    division = {}
+    apartment_cons = {}
 
     # get the current month and year
     current_month = datetime.now().month
     current_year = datetime.now().year
-    print(current_year, current_month)
 
     user = request.user
     profile = user.profile
     building = get_object_or_404(Building, profile=profile)
     expenses = Expense.objects.filter(profile=building.profile)
     current_expenses = Expense.objects.filter(month=current_month).filter(year=current_year)
-    print(current_expenses)
     apartments = Apartment.objects.filter(building=building)
 
     # calculate the total of every type of expense
@@ -300,15 +305,43 @@ def calculateExpenses(request):
         else:
             total_general = total_general + expense.total
 
+    # get the consumption for every apartment
     for apartment in apartments:
-        apartment_heating[apartment.id] = total_heating * apartment.heating
+        consumption[apartment.id] = Consumption.objects.filter(apartment=apartment)[0]
+
+    # multiplies heating millimetre with the hours of every apartment
+    # and gets the total of those multiplication
+    for apartment in apartments:
+        product[apartment.id] = apartment.heating * consumption[apartment.id].consumption
+        total_product = total_product + product[apartment.id]
+
+    # divides each product with the total_product
+    for apartment in apartments:
+        division[apartment.id] = product[apartment.id] / total_product
+
+    # get the product of fi and millimetres of every apartment
+    for apartment in apartments:
+        product_static = apartment.heating * apartment.fi
+
+    static = 1 - product_static
+
+    # multiplies the division of every apartment with the static and adds the product_static
+    for apartment in apartments:
+        apartment_cons[apartment.id] = product_static + division[apartment.id] * static
+
+    # total heating equals to the total petroleum that the building bought for this month
+    for apartment in apartments:
+        apartment_heating[apartment.id] = total_heating * apartment_cons[apartment.id]
         apartment_elevator[apartment.id] = total_elevator * apartment.elevator
         apartment_general[apartment.id] = total_general * apartment.general_expenses
         payment = Payment(apartment=apartment, month=current_month, year=current_year,
                           total_heating=apartment_heating[apartment.id],
                           total_elevator=apartment_elevator[apartment.id],
                           total_general=apartment_general[apartment.id])
-        # vlepw an yparxei ena payment gia to idio apaerment kai an nai to svinw gia na ginei save to kainourgio
+        # checks if a specific payment exists and if it does it deletes it to replace it with the new one
+        if Payment.objects.filter(apartment=apartment, month=current_month, year=current_year).exists():
+            Payment.objects.filter(apartment=apartment, month=current_month, year=current_year).delete()
+
         payment.save()
 
     context = {'building': building, 'expenses': expenses, 'apartments': apartments,
@@ -337,7 +370,8 @@ def createExpense(request, pk):
     user = request.user
     profile = user.profile
     building = Building.objects.get(id=pk)
-    # apartments = Apartment.objects.filter(building=building)
+
+    # initialize profile
     form = ExpenseForm(initial={'profile': profile})
     if request.method == 'POST':
         form = ExpenseForm(request.POST, request.FILES)
@@ -359,6 +393,7 @@ def createExpense(request, pk):
     return render(request, 'buildings/expense_form.html', context)
 
 
+# a method to handle uploaded files
 def handle_uploaded_file(f, path, pk):
     with open('static/documents/' + str(pk) + str(path), 'wb+') as destination:
         for chunk in f.chunks():
@@ -424,17 +459,18 @@ def viewPayment(request, pk):
     return render(request, 'buildings/view_payments.html', context)
 
 
-
 @login_required(login_url='login')
-def Consumption(request):
+def Consum(request):
     user = request.user
     profile = user.profile
     building = Building.objects.get(profile=profile)
     apartments = Apartment.objects.filter(building=building)
 
+    #form = ConsumptionForm(apartments=apartments)
     form = ConsumptionForm()
 
     if request.method == 'POST':
+        #form = ConsumptionForm(request.POST, apartments=apartments)
         form = ConsumptionForm(request.POST)
         if form.is_valid():
             form.save()

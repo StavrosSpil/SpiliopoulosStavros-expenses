@@ -34,7 +34,7 @@ urlpatterns = [
     path('tenant_expenses/', views.tenantExpenses, name='tenant_expenses'),
     path('payments/', views.payments, name='payments'),
     path('view_payments/<str:pk>/', views.viewPayment, name='view_payments'),
-    path('consumption/', views.Consumption, name='consumption'),
+    path('consumption/', views.Consum, name='consumption'),
 
 
     path('profile_settings<str:pk>/', views.updateProfile, name='update_profile'),

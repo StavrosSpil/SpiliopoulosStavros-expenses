@@ -13,6 +13,7 @@ def unauthenticated_user(view_func):
     return wrapper_func
 
 
+# gives access to a specific role in a page
 def allowed_users(allowed_roles=[]):
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
@@ -30,6 +31,7 @@ def allowed_users(allowed_roles=[]):
     return decorator
 
 
+# gives access only to the site-admin
 def admin_only(view_func):
     def wrapper_function(request, *args, **kwargs):
         group = None

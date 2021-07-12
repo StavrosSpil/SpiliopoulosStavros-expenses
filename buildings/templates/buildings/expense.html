@@ -8,16 +8,21 @@
 <br>
 
 <div class="row">
-	<div class="col">
+	<div class="col-md-11">
 		<h5>Expenses of the building at {{building}}:</h5>
-		<hr>
-		<div class="card card-body">
-			<form method="get">
-				{{ myFilter.form }}
-		    <button class="btn btn-primary" type="submit">Search</button>
+	</div>
 
-		  </form>
-		</div>
+	<div class="col-md-1">
+		<a class="btn btn-warning" href="{% url 'administrator_page' %}">Back</a>
+	</div>
+
+	<hr>
+	<div class="card card-body">
+		<form method="get">
+			{{ myFilter.form }}
+		<button class="btn btn-primary" type="submit">Search</button>
+
+	  </form>
 	</div>
 </div>
 

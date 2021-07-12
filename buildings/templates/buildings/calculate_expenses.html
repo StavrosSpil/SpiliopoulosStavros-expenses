@@ -5,23 +5,28 @@
 <br>
 
 <div class="row">
-	<div class="col-md">
+	<div class="col-md-11">
 		<h5>Total expenses for the building at {{building.address}}</h5>
-		<hr>
-		<div class="card card-body">
-			<table class="table table-sm">
-				<tr>
-					<th>Total_Heating</th>
-					<th>Total_Elevator</th>
-					<th>Total_General</th>
-                </tr>
-				<tr>
-					<td>{{total_heating}}</td>
-					<td>{{total_elevator}}</td>
-					<td>{{total_general}}</td>
-				</tr>
-			</table>
-		</div>
+	</div>
+
+	<div class="col-md-1">
+		<a class="btn btn-warning" href="{% url 'administrator_page' %}">Back</a>
+	</div>
+
+	<hr>
+	<div class="card card-body">
+		<table class="table table-sm">
+			<tr>
+				<th>Total_Heating</th>
+				<th>Total_Elevator</th>
+				<th>Total_General</th>
+			</tr>
+			<tr>
+				<td>{{total_heating}}</td>
+				<td>{{total_elevator}}</td>
+				<td>{{total_general}}</td>
+			</tr>
+		</table>
 	</div>
 </div>
 
