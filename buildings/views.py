@@ -277,6 +277,7 @@ def calculateExpenses(request):
     total_elevator = 0.0
     total_general = 0.0
     total_product = 0.0
+    product_static = 0.0
     apartment_heating = {}
     apartment_elevator = {}
     apartment_general = {}
@@ -310,9 +311,11 @@ def calculateExpenses(request):
         consumption[apartment.id] = Consumption.objects.filter(apartment=apartment)[0]
 
     # multiplies heating millimetre with the hours of every apartment
-    # and gets the total of those multiplication
     for apartment in apartments:
         product[apartment.id] = apartment.heating * consumption[apartment.id].consumption
+
+    # and gets the total of the previous multiplications
+    for apartment in apartments:
         total_product = total_product + product[apartment.id]
 
     # divides each product with the total_product
@@ -321,13 +324,13 @@ def calculateExpenses(request):
 
     # get the product of fi and millimetres of every apartment
     for apartment in apartments:
-        product_static = apartment.heating * apartment.fi
+        product_static = product_static + apartment.heating * apartment.fi
 
     static = 1 - product_static
 
     # multiplies the division of every apartment with the static and adds the product_static
     for apartment in apartments:
-        apartment_cons[apartment.id] = product_static + division[apartment.id] * static
+        apartment_cons[apartment.id] = division[apartment.id] * static + (apartment.heating * apartment.fi)
 
     # total heating equals to the total petroleum that the building bought for this month
     for apartment in apartments:
@@ -466,11 +469,11 @@ def Consum(request):
     building = Building.objects.get(profile=profile)
     apartments = Apartment.objects.filter(building=building)
 
-    #form = ConsumptionForm(apartments=apartments)
+    # form = ConsumptionForm(apartments=apartments)
     form = ConsumptionForm()
 
     if request.method == 'POST':
-        #form = ConsumptionForm(request.POST, apartments=apartments)
+        # form = ConsumptionForm(request.POST, apartments=apartments)
         form = ConsumptionForm(request.POST)
         if form.is_valid():
             form.save()
